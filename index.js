@@ -76,11 +76,3 @@ input.addEventListener("keyup", function(event) {
     document.getElementById("add-button").click();
   }
 });
-
-// refresh page on pull down
-window.addEventListener('touchstart', function onFirstTouch() {
-  window.location.reload();
-  window.removeEventListener('touchstart', onFirstTouch, false);
-}, false);
-
-
