@@ -10,7 +10,7 @@ const database = getDatabase(app);
 const listItemsInDB = ref(database, "listItems");
 
 function updateDocumentTitleWithCount(count) {
-  document.title = count > 0 ? `(${count}) My App` : "My App";
+  document.title = count > 0 ? `(${count}) Direct Mail` : "Direct Mail";
 }
 
 async function updatePwaBadge(count) {
