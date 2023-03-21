@@ -23,7 +23,7 @@ input {
   color: #432000;
   background-color: #f5f7fc;
   border: 1px solid #dfdfdf;
-  padding: 15px;
+  padding: 60px 15px;
   border-radius: 8px;
   font-size: 20px;
   text-align: center;
@@ -56,7 +56,7 @@ ul {
 }
 
 ul li {
-  font-size: 20px;
+  font-size: 16px;
   background-color: #f5f7fc;
   padding: 15px;
   border-radius: 8px;
