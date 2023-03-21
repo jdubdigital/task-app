@@ -1,13 +1,46 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"
-import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+import { getMessaging, onMessage, getToken } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-messaging.js";
 
 const appSettings = {
-  databaseURL: "https://realtime-database-615b6-default-rtdb.firebaseio.com/"
+  databaseURL: "https://realtime-database-615b6-default-rtdb.firebaseio.com/",
+};
+
+const app = initializeApp(appSettings);
+const database = getDatabase(app);
+const listItemsInDB = ref(database, "listItems");
+const messaging = getMessaging(app);
+
+// Request user permission and get notification token
+async function requestNotificationPermission() {
+  try {
+    await messaging.requestPermission();
+    const token = await getToken(messaging);
+    console.log("Notification token:", token);
+  } catch (error) {
+    console.error("Error getting notification permission:", error);
+  }
 }
 
-const app = initializeApp(appSettings)
-const database = getDatabase(app)
-const listItemsInDB = ref(database, "listItems")
+// Call this function when needed (e.g., on page load or on user action)
+requestNotificationPermission();
+
+// Handle incoming messages
+onMessage(messaging, (payload) => {
+  console.log("Message received:", payload);
+  const notificationTitle = payload.notification.title;
+  const notificationOptions = {
+    body: payload.notification.body,
+    icon: payload.notification.icon,
+  };
+
+  if (!("Notification" in window)) {
+    console.log("This browser does not support system notifications");
+  } else if (Notification.permission === "granted") {
+    const notification = new Notification(notificationTitle, notificationOptions);
+  }
+});
+
 
 const inputFieldEl = document.getElementById("input-field")
 const addButtonEl = document.getElementById("add-button")
