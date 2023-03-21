@@ -14,9 +14,9 @@ function updateDocumentTitleWithCount(count) {
 }
 
 async function updatePwaBadge(count) {
-  if ('setAppBadge' in navigator) {
+  if ('Badge' in window) {
     try {
-      await navigator.setAppBadge(count);
+      await window.Badge.set(count);
     } catch (error) {
       console.error('Failed to update PWA badge:', error);
     }
